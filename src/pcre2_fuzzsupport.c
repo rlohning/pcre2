@@ -10,6 +10,7 @@ Written by Philip Hazel, October 2016
 ***************************************************************************/
 
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,6 +57,23 @@ int LLVMFuzzerTestOneInput(const unsigned char *, size_t);
 
 int LLVMFuzzerTestOneInput(const unsigned char *data, size_t size)
 {
+    // Rebuild usage of PCRE2 in Qt
+
+    pcre2_code_8 *compiledPattern = 0;
+    int errorCode = 0;
+    int capturingCount = 0;
+    int options = 0;
+    bool usingCrLfNewlines = false;
+    PCRE2_SIZE patternErrorOffset;
+    compiledPattern = pcre2_compile(data,
+                                    size,
+                                    options,
+                                    &errorCode,
+                                    &patternErrorOffset,
+                                    0);
+    free(compiledPattern);
+    return 0;
+
 uint32_t compile_options;
 uint32_t match_options;
 pcre2_match_data *match_data = NULL;
