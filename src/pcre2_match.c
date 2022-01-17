@@ -2455,7 +2455,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
         case PT_SCX:
           {
           BOOL ok = (Fecode[2] == prop->script ||
-                     MAPBIT((PRIV(ucd_script_sets) + prop->scriptx), Fecode[2]) != 0);
+                     MAPBIT(PRIV(ucd_script_sets) + UCD_SCRIPTX_PROP(prop), Fecode[2]) != 0);
           if (ok == notmatch) RRETURN(MATCH_NOMATCH);
           }
         break;
@@ -2514,14 +2514,14 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
         break;
 
         case PT_BIDICL:
-        if ((prop->bidi == Fecode[2]) == notmatch)
+        if ((UCD_BIDICLASS_PROP(prop) == Fecode[2]) == notmatch)
           RRETURN(MATCH_NOMATCH);
         break;
 
         case PT_BOOL:
           {
           BOOL ok = MAPBIT(PRIV(ucd_boolprop_sets) +
-            prop->bprops * ucd_boolprop_sets_item_size, Fecode[2]) != 0;
+            UCD_BPROPS_PROP(prop), Fecode[2]) != 0;
           if (ok == notmatch) RRETURN(MATCH_NOMATCH);
           }
         break;
@@ -2737,7 +2737,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARINCTEST(fc, Feptr);
             prop = GET_UCD(fc);
             ok = (prop->script == Lpropvalue ||
-                  MAPBIT(PRIV(ucd_script_sets) + prop->scriptx, Lpropvalue) != 0);
+                  MAPBIT(PRIV(ucd_script_sets) + UCD_SCRIPTX_PROP(prop), Lpropvalue) != 0);
             if (ok == notmatch)
               RRETURN(MATCH_NOMATCH);
             }
@@ -2875,7 +2875,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARINCTEST(fc, Feptr);
             prop = GET_UCD(fc);
             ok = MAPBIT(PRIV(ucd_boolprop_sets) +
-              prop->bprops * ucd_boolprop_sets_item_size, Lpropvalue) != 0;
+              UCD_BPROPS_PROP(prop), Lpropvalue) != 0;
             if (ok == notmatch)
               RRETURN(MATCH_NOMATCH);
             }
@@ -3535,7 +3535,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARINCTEST(fc, Feptr);
             prop = GET_UCD(fc);
             ok = (prop->script == Lpropvalue
-                  || MAPBIT(PRIV(ucd_script_sets) + prop->scriptx, Lpropvalue) != 0);
+                  || MAPBIT(PRIV(ucd_script_sets) + UCD_SCRIPTX_PROP(prop), Lpropvalue) != 0);
             if (ok == (Lctype == OP_NOTPROP))
               RRETURN(MATCH_NOMATCH);
             }
@@ -3695,7 +3695,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARINCTEST(fc, Feptr);
             prop = GET_UCD(fc);
             ok = MAPBIT(PRIV(ucd_boolprop_sets) +
-              prop->bprops * ucd_boolprop_sets_item_size, Lpropvalue) != 0;
+              UCD_BPROPS_PROP(prop), Lpropvalue) != 0;
             if (ok == (Lctype == OP_NOTPROP))
               RRETURN(MATCH_NOMATCH);
             }
@@ -4117,7 +4117,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARLENTEST(fc, Feptr, len);
             prop = GET_UCD(fc);
             ok = (prop->script == Lpropvalue ||
-                  MAPBIT(PRIV(ucd_script_sets) + prop->scriptx, Lpropvalue) != 0);
+                  MAPBIT(PRIV(ucd_script_sets) + UCD_SCRIPTX_PROP(prop), Lpropvalue) != 0);
             if (ok == notmatch) break;
             Feptr+= len;
             }
@@ -4263,7 +4263,7 @@ fprintf(stderr, "++ op=%d\n", *Fecode);
             GETCHARLENTEST(fc, Feptr, len);
             prop = GET_UCD(fc);
             ok = MAPBIT(PRIV(ucd_boolprop_sets) +
-              prop->bprops * ucd_boolprop_sets_item_size, Lpropvalue) != 0;
+              UCD_BPROPS_PROP(prop), Lpropvalue) != 0;
             if (ok == notmatch) break;
             Feptr+= len;
             }
